@@ -1,0 +1,442 @@
+<style>
+    :root{
+      --gold:#F4B400;
+      --blue:#005AA7;
+      --bg:#ffffff;
+      --card:#f7f9fb;
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --max-width:1100px;
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --card:#0f1724;
+      --glass: rgba(255,255,255,0.03);
+      --muted:#9aa6bf;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Open Sans',system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial; margin:0; background:var(--bg); color:var(--muted); -webkit-font-smoothing:antialiased}
+    a{color:var(--blue); text-decoration:none}
+    header{position:fixed;left:0;right:0;top:0;z-index:40;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); padding:12px 20px}
+    [data-theme="dark"] header{background:linear-gradient(180deg, rgba(11,18,32,0.6), rgba(11,18,32,0.2))}
+    .container{max-width:var(--max-width);margin:0 auto}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:12px;display:block;object-fit:cover;box-shadow:0 4px 10px rgba(0,0,0,0.12);}
+    nav ul{display:flex;gap:14px;align-items:center;list-style:none;margin:0;padding:0}
+    nav ul li a{font-weight:600;color:var(--muted)}
+    .hero{padding:120px 20px 60px}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero h1{font-family:'Poppins';font-size:34px;margin:0;color:var(--blue)}
+    .lead{font-size:15px;color:var(--muted);line-height:1.6}
+    .cta{margin-top:18px;display:flex;gap:10px}
+    .btn{background:var(--gold);border:none;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+    .secondary{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:10px 14px;border-radius:10px}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    .stats{display:flex;gap:12px;margin-top:14px}
+    .stat{flex:1;text-align:center}
+    .section{padding:40px 20px}
+    h2{font-family:'Poppins';color:var(--blue);margin:0 0 12px 0}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+    .place{display:flex;gap:12px;align-items:flex-start}
+    .place img{width:120px;height:80px;object-fit:cover;border-radius:10px}
+    footer{padding:28px 20px;background:linear-gradient(180deg, rgba(245,246,250,0.6), rgba(245,246,250,0.2));margin-top:30px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{background:var(--glass);padding:6px 10px;border-radius:8px;font-weight:600;color:var(--muted)}
+    /* responsive */
+    @media (max-width:880px){.hero-grid{grid-template-columns:1fr;}.hero{padding-top:100px}}
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);z-index:80}
+    .lightbox img{max-width:92%;max-height:92%;border-radius:12px}
+    /* small helper */
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--card);font-weight:700}
+    .map-placeholder{height:220px;border-radius:12px;background:linear-gradient(135deg,#e6f2ff,#fff5d9);display:flex;align-items:center;justify-content:center;color:#425c7a;font-weight:700}
+    .toggle{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px;border-radius:10px;cursor:pointer}
+
+    /* Page-like appearance + transitions (baru) */
+    main{padding-top:20px}
+    .page{display:none;opacity:0;transform:translateY(8px);transition:opacity .28s ease, transform .28s ease;max-width:var(--max-width);margin:24px auto;background:var(--card);border-radius:18px;box-shadow:0 18px 40px rgba(2,6,23,0.06);padding:28px;position:relative;z-index:1}
+    .page.active{display:block;opacity:1;transform:none}
+    /* ketika header tetap terlihat, beri sedikit jarak atas agar terlihat seperti halaman terpisah */
+    .page.hero{padding-top:48px}
+
+    /* Audio toggle button */
+    .audio-toggle{position:fixed;left:12px;bottom:12px;z-index:1200;background:var(--card);border:0;padding:10px 12px;border-radius:10px;box-shadow:0 8px 20px rgba(2,6,23,0.08);cursor:pointer;font-weight:700}
+    .audio-toggle[aria-pressed="true"]{background:#ffe9b3}
+  </style>
+
+    </head>
+<body>
+  <!-- BACKSOUND: change `src` to your audio file, e.g. assets/bgm.mp3 -->
+  <audio id="bgAudio" src="assets/bgm.mp3" loop preload="auto"></audio>
+  <button id="audioToggle" class="audio-toggle" aria-pressed="false" title="Play background music">►</button>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="logo-explore.png" alt="Logo Explore Jawa Timur" class="logo" loading="lazy">
+        <div>
+          <div style="font-weight:700;color:var(--blue);">Explore Jawa Timur</div>
+          <div style="font-size:12px;color:var(--muted)">Bumi Majapahit — Budaya & Alam</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <nav>
+          <ul>
+            <li><a href="#profil">Profil</a></li>
+            <li><a href="#budaya">Budaya</a></li>
+            <li><a href="#pariwisata">Pariwisata</a></li>
+            <li><a href="#geografi">Geografi</a></li>
+            <li><a href="#fakta">Fakta</a></li>
+          </ul>
+        </nav>
+        <button id="themeToggle" class="toggle">Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- tambahkan class "page" ke setiap section; beri "active" pada profil sebagai halaman awal -->
+    <section class="hero container page active" id="profil">
+      <div class="hero-grid">
+        <div>
+          <h1>Selamat Datang di Jawa Timur</h1>
+          <p class="lead">Jelajahi kekayaan budaya, lanskap alam, dan fakta unik dari Provinsi Jawa Timur. Website ini dirancang untuk menampilkan profil provinsi, budaya, tempat wisata, hingga tradisi lokal dalam tampilan modern dan elegan.</p>
+          <div class="cta">
+            <button class="btn" onclick="showPage('pariwisata')">Jelajahi Destinasi</button>
+            <a class="secondary" href="#budaya">Pelajari Budaya</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="max-width:420px;margin-left:auto;">
+            <h4 style="margin:0 0 8px 0">Profil Singkat (Video)</h4>
+            <p class="muted" style="margin:0 0 12px 0">Tonton video singkat tentang Jawa Timur.</p>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+              <iframe src="https://www.youtube.com/embed/ND4cHN7k5SA" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen title="Profil Jawa Timur Video"></iframe>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section container page" id="budaya">
+      <h2>Budaya Daerah</h2>
+      <p class="muted">Beragam budaya yang hidup: arsitektur tradisional, kostum, tarian, musik, dan kuliner.</p>
+      <div class="grid-3" style="margin-top:16px">
+        <div class="card">
+          <h4>Rumah Adat</h4>
+          <p class="muted">Rumah tradisional seperti joglo di beberapa daerah, dengan ornamen khas Jawa Timur.</p>
+        </div>
+        <div class="card">
+          <h4>Pakaian Tradisional</h4>
+          <p class="muted">Pakaian pengantin dan kebaya klasik yang dipakai pada upacara adat.</p>
+        </div>
+        <div class="card">
+          <h4>Tarian & Musik</h4>
+          <p class="muted">Tarian seperti Remo dan Reog Ponorogo; diiringi gamelan dan alat musik tradisional.</p>
+        </div>
+        <div class="card">
+          <h4>Makanan Khas</h4>
+          <p class="muted">Rawon, Rujak Cingur, Lontong Balap, dan aneka kuliner jalanan yang kaya rasa.</p>
+        </div>
+        <div class="card">
+          <h4>Lagu Daerah</h4>
+          <p class="muted">Lagu-lagu tradisional yang sering dinyanyikan saat perayaan dan pertunjukan.</p>
+        </div>
+      </div>
+
+        <div>
+          <div class="card">
+            <h3 style="margin-top:0">Profil Singkat</h3>
+            <p class="muted" style="margin-bottom:8px">Sejarah singkat: Jawa Timur memiliki akar sejarah kuat sejak era Kerajaan Majapahit—pusat perdagangan, kebudayaan, dan penyebaran agama di Nusantara.</p>
+            <p class="muted" style="margin:0 0 8px 0">Luas wilayah: ±47.800 km²</p>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+              <iframe src="https://www.youtube.com/embed/ND4cHN7k5SA" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen title="Profil Jawa Timur Video"></iframe>
+            </div>
+          </div>
+        </div>  <!-- <<< tambahkan closing div ini -->
+    </section>
+
+    <section class="section container page" id="pariwisata">
+      <h2>Pariwisata — Destinasi Populer</h2>
+      <p class="muted">Daftar 3–5 lokasi wisata terkenal beserta deskripsi singkat. Klik gambar untuk melihat lebih besar.</p>
+      <div class="gallery" style="margin-top:14px">
+        <!-- Gambar menggunakan sumber bebas; ganti dengan foto lokal yang kalian miliki -->
+        <img src=gunungbromo.jpg alt="Gunung Bromo" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:10px;cursor:pointer" onclick="openLightbox(this)">
+        <img src=pantaiklayar.jpg alt="Pantai" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:10px;cursor:pointer" onclick="openLightbox(this)">
+        <img src=tumpaksewu.jpg alt="Air Terjun" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:10px;cursor:pointer" onclick="openLightbox(this)">
+        <img src=batunight.jpg alt="Batu Night Spectacular" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:10px;cursor:pointer" onclick="openLightbox(this)">
+      </div>
+
+      <div style="margin-top:18px;display:grid;gap:12px">
+        <div class="card place">
+          <img src=gunungbromo.jpg alt="Bromo">
+          <div>
+            <h4 style="margin:0;color:var(--blue)">Gunung Bromo</h4>
+            <p class="muted" style="margin:6px 0 0 0">Ikonik untuk melihat matahari terbit di lautan pasir. Akses dari Probolinggo atau Pasuruan.</p>
+          </div>
+        </div>
+
+        <div class="card place">
+          <img src=pantaiklayar.jpg alt="Pantai Klayar">
+          <div>
+            <h4 style="margin:0;color:var(--blue)">Pantai Klayar (Pacitan)</h4>
+            <p class="muted" style="margin:6px 0 0 0">Pesisir berpasir putih dengan formasi batu karang yang dramatis.</p>
+          </div>
+        </div>
+
+        <div class="card place">
+          <img src=tumpaksewu.jpg alt="Tumpak Sewu">
+          <div>
+            <h4 style="margin:0;color:var(--blue)">Air Terjun Tumpak Sewu</h4>
+            <p class="muted" style="margin:6px 0 0 0">Air terjun multi-layer yang spektakuler—salah satu yang paling fotogenik di Jawa Timur.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section container page" id="geografi">
+      <h2>Geografi & Alam</h2>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:12px">
+        <div class="card">
+          <h4>Bentang Alam</h4>
+          <p class="muted">Terdapat gunung berapi (Bromo, Semeru), dataran tinggi, hutan, dan garis pantai yang panjang—menjadikan Jawa Timur kaya akan variasi lanskap.</p>
+
+          <h4 style="margin-top:12px">Iklim</h4>
+          <p class="muted">Bersifat tropis: musim hujan dan kemarau; suhu rata-rata 22–34°C tergantung ketinggian.</p>
+
+          <h4 style="margin-top:12px">Flora & Fauna</h4>
+          <p class="muted">Contoh: Banteng Jawa, Lutung Jawa, anggrek, dan pohon jati.</p>
+        </div>
+
+        <div class="card">
+          <h4>Peta & Lokasi</h4>
+          <div class="map-placeholder">(Ganti dengan Google Maps iframe atau peta statis)</div>
+          <!--<p class="muted" style="margin-top:8px">Tip: untuk peta interaktif, tambahkan iframe Google Maps atau Leaflet + GeoJSON.</p>-->
+        </div>
+      </div>
+    </section>
+
+    <section class="section container page" id="fakta">
+      <h2>Fakta Unik & Tradisi</h2>
+        <div class="card">
+          <h4>Julukan</h4>
+          <p class="muted">"Bumi Majapahit" — merujuk pada kejayaan sejarah Kerajaan Majapahit.</p>
+        </div>
+        <div class="card">
+          <h4>Festival</h4>
+          <p class="muted">Jember Fashion Carnaval, Festival Reog Ponorogo, dan berbagai perayaan budaya lokal.</p>
+        </div>
+        <div class="card">
+          <h4>Upacara Adat</h4>
+          <p class="muted">Ada tradisi larung, sedekah laut, dan ritual adat di beberapa komunitas pesisir.</p>
+        </div>
+        <div class="card">
+          <h4>Hari Jadi Provinsi</h4>
+          <p class="muted">12 Oktober — (cantumkan tanggal resmi sesuai sumber jika diperlukan).</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    <div class="container" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:700;color:var(--blue)">Explore Jawa Timur</div>
+          <div class="muted" style="font-size:13px">Dibuat untuk proyek kelompok 2.</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="tags">
+            <button class="tag" onclick="showPage('budaya')" style="border:none;background:var(--glass);padding:6px 10px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;">Budaya</button>
+            <button class="tag" onclick="showPage('pariwisata')" style="border:none;background:var(--glass);padding:6px 10px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;">Pariwisata</button>
+            <button class="tag" onclick="showPage('geografi')" style="border:none;background:var(--glass);padding:6px 10px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;">Geografi</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <small class="muted">Sumber: Dokumentasi Lokal</small>
+        <small class="muted">© 2025 Explore Jawa Timur — Kelompok 2</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <img src="" alt="" id="lightboxImg">
+  </div>
+
+<script>
+function checkIframe(){
+  console.log('testIframe.src =', document.getElementById('testIframe').src);
+  alert('Buka DevTools (F12) → Console & Network. Lihat pesan terkait iframe (mis. "Refused to display" atau error lain).');
+}
+</script>
+</script>
+
+<script>
+  // Background audio control
+  (function(){
+    const audio = document.getElementById('bgAudio');
+    const btn = document.getElementById('audioToggle');
+    if(!audio || !btn) return;
+    audio.volume = 0.18;
+
+    function tryPlay(){
+      audio.play().then(()=>{
+        btn.textContent = '▮▮';
+        btn.setAttribute('aria-pressed','true');
+      }).catch(err=>{
+        btn.textContent = '►';
+        btn.setAttribute('aria-pressed','false');
+        console.log('Autoplay blocked or failed:', err);
+      });
+    }
+
+    btn.addEventListener('click', ()=>{
+      if(audio.paused){
+        audio.play().then(()=>{ btn.textContent='▮▮'; btn.setAttribute('aria-pressed','true'); }).catch(err=>{ console.log('Play failed:',err); alert('Playback gagal. Coba izinkan audio di browser atau klik lagi.'); });
+      } else {
+        audio.pause();
+        btn.textContent='►';
+        btn.setAttribute('aria-pressed','false');
+      }
+    });
+
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden){ audio.pause(); btn.textContent='►'; btn.setAttribute('aria-pressed','false'); }
+    });
+
+    // Fallback: try play on first user click if autoplay blocked
+    document.addEventListener('click', function once(){ if(audio.paused){ tryPlay(); } document.removeEventListener('click', once); });
+
+    tryPlay();
+  })();
+</script>
+
+  <script>
+    // small SPA-like page switcher: tampilkan satu "page" per saat, ubah hash dan history
+    (function(){
+      const pages = Array.from(document.querySelectorAll('.page'));
+      const navLinks = document.querySelectorAll('a[href^="#"]');
+
+      function setActive(id, push=true){
+        const target = document.getElementById(id);
+        if(!target) return;
+        pages.forEach(p=>p.classList.toggle('active', p.id===id));
+        // scroll to top of viewport for the faux page
+        window.scrollTo({top:0,behavior:'instant'});
+        if(push) history.pushState({page:id}, '', '#'+id);
+        // update title sesuai section heading bila perlu
+        const heading = target.querySelector('h1, h2, h3, h4');
+        if(heading) document.title = heading.textContent + ' — Explore Jawa Timur';
+      }
+
+      // export to global so onclick inline dapat memanggilnya
+      window.showPage = function(id){ setActive(id,true); }
+
+      // attach nav clicks to showPage instead of smooth scroll
+      navLinks.forEach(a=>{
+        a.addEventListener('click', e=>{
+          const id = a.getAttribute('href').slice(1);
+          if(!id) return;
+          e.preventDefault();
+          setActive(id,true);
+        })
+      });
+
+      // on popstate, tampilkan berdasarkan hash
+      window.addEventListener('popstate', ()=> {
+        const id = location.hash ? location.hash.slice(1) : 'profil';
+        setActive(id,false);
+      });
+
+      // initial load: pilih berdasarkan hash atau default
+      const initial = location.hash ? location.hash.slice(1) : 'profil';
+      setActive(initial, false);
+    })();
+
+    // Theme toggle (light/dark) - tetap seperti sebelumnya
+    const btn = document.getElementById('themeToggle');
+    const current = localStorage.getItem('theme') || 'light';
+    if(current === 'dark'){document.documentElement.setAttribute('data-theme','dark'); btn.textContent='Light'}
+    btn.addEventListener('click', ()=>{
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if(isDark){document.documentElement.removeAttribute('data-theme'); btn.textContent='Dark'; localStorage.setItem('theme','light')} else {document.documentElement.setAttribute('data-theme','dark'); btn.textContent='Light'; localStorage.setItem('theme','dark')}
+    })
+
+    // Lightbox functions (tetap)
+    function openLightbox(img){
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightboxImg');
+      lbImg.src = img.src;
+      lb.style.display = 'flex';
+      try{ if(window.playBtnSound) window.playBtnSound(); }catch(e){}
+    }
+    function closeLightbox(e){
+      if(e.target.id === 'lightbox' || e.target.id === 'lightboxImg'){
+        try{ if(window.playBtnSound) window.playBtnSound(); }catch(err){}
+        document.getElementById(
+          'lightbox').style.display = 'none';
+      }
+    }
+
+    // Close lightbox with ESC
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape'){
+        try{ if(window.playBtnSound) window.playBtnSound(); }catch(err){}
+        document.getElementById('lightbox').style.display='none'
+      }
+    })
+  </script>
+
+  <!-- Button click sound: use file `assets/btnsound.wav` (clone for overlapping plays) -->
+  <script>
+    (function(){
+      // Create a hidden audio element that will be cloned when playing
+      const btnAudio = document.createElement('audio');
+      btnAudio.id = 'btnSound';
+      btnAudio.src = 'assets/btnsound.wav';
+      btnAudio.preload = 'auto';
+      btnAudio.style.display = 'none';
+      // modest default volume; adjust if needed
+      try{ btnAudio.volume = 0.9 }catch(e){}
+      document.body.appendChild(btnAudio);
+
+      function playBtnSound(){
+        try{
+          // cloning allows overlapping/rapid clicks without cutting previous audio
+          const s = btnAudio.cloneNode(true);
+          // ensure the element is in DOM on some browsers (not strictly required)
+          s.style.display = 'none';
+          document.body.appendChild(s);
+          // attempt to play; if blocked, catch and ignore
+          const playPromise = s.play();
+          if(playPromise && typeof playPromise.then === 'function'){
+            playPromise.catch(err => { console.log('btn sound play blocked:', err); });
+          }
+          // cleanup after finished
+          s.addEventListener('ended', ()=>{ try{ s.remove(); }catch(e){} });
+          // Also remove after a timeout to be safe
+          setTimeout(()=>{ try{ s.remove(); }catch(e){} }, 2000);
+        }catch(err){ console.log('playBtnSound error', err); }
+      }
+
+      // expose to global so other code (lightbox, etc.) can trigger the same sound
+      try{ window.playBtnSound = playBtnSound; }catch(e){ }
+
+      document.addEventListener('click', function(e){
+        const el = e.target.closest('button, .tag, .btn, .secondary, [role="button"], a[href^="#"]');
+        if(!el) return;
+        playBtnSound();
+      }, {passive:true});
+    })();
+  </script>
+</body>
+</html>
