@@ -281,6 +281,28 @@ main{padding-top:20px}
   box-shadow: 0 20px 40px rgba(16,24,40,0.12);
 }
 
+/* TTS pill button (Pariwisata) */
+.tts-row{margin:10px 0 6px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tts-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:linear-gradient(90deg, rgba(0,97,255,0.08), rgba(0,97,255,0.02));
+  color:var(--muted);
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease), background .2s var(--ease);
+  box-shadow:0 10px 30px rgba(0,97,255,0.08);
+}
+.tts-pill:hover{transform:translateY(-1px) scale(1.01);background:linear-gradient(90deg, rgba(0,97,255,0.12), rgba(0,97,255,0.05))}
+.tts-pill--playing{box-shadow:0 14px 32px rgba(0,97,255,0.18);border-color:rgba(0,97,255,0.35);background:linear-gradient(90deg, rgba(0,97,255,0.18), rgba(0,97,255,0.08));color:var(--accent)}
+.tts-icon{width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:white;color:var(--accent);box-shadow:inset 0 0 0 1px rgba(0,97,255,0.25)}
+.tts-pill--playing .tts-icon{background:var(--accent);color:white;box-shadow:none}
+.tts-chip{background:white;color:var(--muted);padding:4px 8px;border-radius:10px;font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+
 /* small: keep footer outside pages so it's persistent */
   </style>
 </head>
@@ -466,6 +488,14 @@ main{padding-top:20px}
         <img src="gunungbromo.jpg" alt="Bromo" loading="lazy" onclick="openLightbox(this)">
         <div>
           <h4 style="margin:0;color:var(--accent)">Gunung Bromo</h4>
+          <div class="tts-row">
+            <button class="tts-pill" data-tts="ElabsGunungBromo.mp3" aria-pressed="false" aria-label="Putar narasi Gunung Bromo">
+              <span class="tts-icon">▶</span>
+              <span class="tts-text">Dengarkan narasi</span>
+              <span class="tts-chip">TTS</span>
+            </button>
+            <small class="muted">Narasi singkat Gunung Bromo</small>
+          </div>
           <p class="muted" style="margin:6px 0 0 0">
             Gunung Bromo adalah salah satu gunung berapi aktif paling terkenal di dunia dan merupakan bagian dari Taman Nasional Bromo Tengger Semeru. Keunikan utama Bromo adalah keberadaannya di tengah lautan pasir vulkanik yang luas, yang oleh penduduk setempat disebut "Segara Wedi" atau Lautan Pasir. Selain dikenal sebagai tempat terbaik untuk menyaksikan matahari terbit yang spektakuler, Bromo juga merupakan gunung suci bagi Suku Tengger.
           </p>
@@ -487,6 +517,14 @@ main{padding-top:20px}
         <img src="Pantai-Klayar.jpg" alt="Pantai Klayar" loading="lazy" onclick="openLightbox(this)">
         <div>
           <h4 style="margin:0;color:var(--accent)">Pantai Klayar (Pacitan)</h4>
+          <div class="tts-row">
+            <button class="tts-pill" data-tts="ElabsPantaiKlayar.mp3" aria-pressed="false" aria-label="Putar narasi Pantai Klayar">
+              <span class="tts-icon">▶</span>
+              <span class="tts-text">Dengarkan narasi</span>
+              <span class="tts-chip">TTS</span>
+            </button>
+            <small class="muted">Narasi singkat Pantai Klayar</small>
+          </div>
           <p class="muted" style="margin:6px 0 0 0">
             Pantai Klayar yang terletak di Pacitan terkenal dengan formasi batu karang raksasa yang menawan, menjadikannya salah satu pantai tercantik di pesisir selatan Jawa. Keunikan paling menarik dari Pantai Klayar adalah fenomena alam yang disebut "Seruling Samudra". Fenomena ini terjadi ketika ombak menghantam celah sempit pada batu karang, mendorong air ke atas dan menghasilkan suara siulan yang indah, mirip seperti suara seruling.
           </p>
@@ -508,6 +546,14 @@ main{padding-top:20px}
         <img src="tumpaksewu.jpg" alt="Tumpak Sewu" loading="lazy" onclick="openLightbox(this)">
         <div>
           <h4 style="margin:0;color:var(--accent)">Air Terjun Tumpak Sewu (Lumajang)</h4>
+          <div class="tts-row">
+            <button class="tts-pill" data-tts="ElabsTumpakSewu.mp3" aria-pressed="false" aria-label="Putar narasi Air Terjun Tumpak Sewu">
+              <span class="tts-icon">▶</span>
+              <span class="tts-text">Dengarkan narasi</span>
+              <span class="tts-chip">TTS</span>
+            </button>
+            <small class="muted">Narasi singkat Tumpak Sewu</small>
+          </div>
           <p class="muted" style="margin:6px 0 0 0">
             Dijuluki sebagai "Niagara Mini" atau "Tebing Nirwana" di Indonesia, Air Terjun Tumpak Sewu menawarkan pemandangan yang megah dan berbeda. Keunikan air terjun ini terletak pada bentuknya yang menyerupai tirai air yang lebar, di mana aliran airnya yang sangat deras turun dari tebing melingkar setinggi sekitar 120 meter. Air terjun ini bukan hanya satu aliran, melainkan terdiri dari ribuan aliran kecil yang terlihat menyatu.
           </p>
@@ -529,6 +575,14 @@ main{padding-top:20px}
         <img src="batunight.jpg" alt="BNS Malang" loading="lazy" onclick="openLightbox(this)">
         <div>
           <h4 style="margin:0;color:var(--accent)">Batu Night Spectacular</h4>
+          <div class="tts-row">
+            <button class="tts-pill" data-tts="ElabsBatuNight.mp3" aria-pressed="false" aria-label="Putar narasi Batu Night Spectacular">
+              <span class="tts-icon">▶</span>
+              <span class="tts-text">Dengarkan narasi</span>
+              <span class="tts-chip">TTS</span>
+            </button>
+            <small class="muted">Narasi singkat Batu Night</small>
+          </div>
           <p class="muted" style="margin:6px 0 0 0">
              Batu Night Spectacular merupakan salah satu destinasi wisata malam yang unik, terletak di Kota Batu (dekat Malang) dengan konsep pasar malam modern. Daya tarik utamanya adalah suasana malam yang fantastis dengan atraksi cahaya dan lampion yang spektakuler.
           </p>
@@ -872,6 +926,77 @@ document.querySelectorAll('img').forEach(img=>{
   updateBtn();
 })();
 
+/* -------------------------------------------------------
+   TTS narasi per kartu (Pariwisata)
+------------------------------------------------------- */
+(function(){
+  const buttons = Array.from(document.querySelectorAll('.tts-pill[data-tts]'));
+  if(!buttons.length) return;
+
+  let currentAudio = null;
+  let currentBtn = null;
+
+  function setState(btn, playing){
+    if(!btn) return;
+    btn.classList.toggle('tts-pill--playing', playing);
+    btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    const icon = btn.querySelector('.tts-icon');
+    if(icon) icon.textContent = playing ? '⏸' : '▶';
+  }
+
+  buttons.forEach(btn => {
+    const src = btn.dataset.tts;
+    if(!src) return;
+
+    const audio = new Audio(src);
+    audio.preload = 'auto';
+
+    btn.addEventListener('click', () => {
+      if(currentAudio && currentAudio !== audio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        setState(currentBtn, false);
+      }
+
+      if(audio.paused){
+        audio.play().then(() => {
+          currentAudio = audio;
+          currentBtn = btn;
+          setState(btn, true);
+        }).catch(() => {
+          setState(btn, false);
+        });
+      } else {
+        audio.pause();
+        setState(btn, false);
+        if(currentAudio === audio){
+          currentAudio = null;
+          currentBtn = null;
+        }
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      setState(btn, false);
+      if(currentAudio === audio){
+        currentAudio = null;
+        currentBtn = null;
+      }
+    });
+
+    audio.addEventListener('pause', () => {
+      const durationKnown = audio.duration && !Number.isNaN(audio.duration);
+      const nearEnd = durationKnown ? audio.currentTime >= audio.duration - 0.08 : false;
+      if(!nearEnd){
+        setState(btn, false);
+        if(currentAudio === audio){
+          currentAudio = null;
+          currentBtn = null;
+        }
+      }
+    });
+  });
+})();
 
 
 /* -------------------------------------------------------
