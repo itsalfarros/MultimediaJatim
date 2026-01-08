@@ -349,7 +349,34 @@ main{padding-top:20px}
       <div class="hero-grid">
         <div>
           <h1 class="reveal">Selamat Datang di Jawa Timur</h1>
-          <p class="lead reveal" style="transition-delay:.05s">Temukan keindahan budaya, alam, dan sejarah dari provinsi  dari yang kaya akan keindahan mulai dari Gunung Semeru hingga pantai selatan yang memukau.</p>
+            <!-- TTS Audio Button -->
+            <button class="audio-btn reveal" id="ttsPlayBtn" style="margin:12px 0 8px 0;transition-delay:.07s" onclick="toggleAudio()">
+              <span id="ttsIcon" style="font-size:18px;">🔊</span> Putar Narasi Profil
+            </button>
+            <audio id="ttsAudio" src="assets/NarasiJatim.m4a"></audio>
+            <script>
+              function toggleAudio() {
+                var audio = document.getElementById('ttsAudio');
+                var btn = document.getElementById('ttsPlayBtn');
+                var icon = document.getElementById('ttsIcon');
+                if (audio.paused) {
+                  audio.play();
+                  btn.classList.add('audio-playing');
+                  icon.textContent = '🔊';
+                } else {
+                  audio.pause();
+                  btn.classList.remove('audio-playing');
+                  icon.textContent = '🔊';
+                }
+              }
+              document.getElementById('ttsAudio').addEventListener('ended', function() {
+                var btn = document.getElementById('ttsPlayBtn');
+                var icon = document.getElementById('ttsIcon');
+                btn.classList.remove('audio-playing');
+                icon.textContent = '🔊';
+              });
+            </script>
+            <p class="lead reveal" style="transition-delay:.05s">Temukan keindahan budaya, alam, dan sejarah dari provinsi  dari yang kaya akan keindahan mulai dari Gunung Semeru hingga pantai selatan yang memukau.</p>
           <p class="lead reveal" style="transition-delay:.05s">Jawa Timur merupakan salah satu provinsi paling strategis di Indonesia, dengan Surabaya sebagai ibu kota dan pusat ekonomi utama di kawasan timur. Provinsi ini dikenal sebagai lumbung pangan dan industri, menyumbang porsi signifikan terhadap PDB nasional berkat sektor pertanian, manufaktur, dan perdagangan yang kuat, didukung oleh infrastruktur vital seperti Pelabuhan Tanjung Perak dan Bandara Internasional Juanda. Secara geografis, Jawa Timur memiliki keragaman yang luar biasa, mulai dari dataran rendah subur hingga kawasan pegunungan berapi aktif, menjadikannya rumah bagi destinasi wisata ikonis seperti Gunung Bromo dan kawah api biru Ijen. Keragaman ini juga tercermin dalam masyarakatnya, yang didominasi oleh Suku Jawa dan Suku Madura, melahirkan kekayaan budaya, bahasa, dan tradisi lokal yang unik. </p>
           <div class="cta reveal" style="transition-delay:.1s">
             <button class="btn-primary" onclick="showPage('pariwisata')">Jelajahi Destinasi</button>
@@ -376,8 +403,15 @@ main{padding-top:20px}
           <h3 style="margin-top:0">Profil Singkat</h3>
           <p class="muted">Jawa Timur adalah provinsi bersejarah dengan pusat kebudayaan Majapahit. Kaya lanskap: gunung, dataran tinggi, dan pantai.</p>
           <p class="muted" style="margin:6px 0 8px 0">Luas wilayah: ±47.800 km² 29 kabupaten & 9 kota.</p>
-          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-            <iframe src="https://www.youtube.com/embed/ND4cHN7k5SA" title="Profil Jawa Timur" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <div style="position:relative;width:100%;max-width:360px;margin:auto;aspect-ratio:9/16;height:auto;overflow:hidden;border-radius:12px;background:#000;">
+            <iframe 
+              src="https://player.cloudinary.com/embed/?cloud_name=dinmn88q8&public_id=credit_A5CB665_xchajk&profile=cld-default"
+              allow="autoplay; fullscreen; encrypted-media"
+              allowfullscreen
+              style="width:100%;height:100%;min-height:420px;border:0;display:block;background:#000;border-radius:12px;"
+              title="Profil Kelompok Multimedia Jatim"
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
       </div>
@@ -628,16 +662,32 @@ main{padding-top:20px}
     </section>
 
     <!-- FAKTA -->
-    <section id="fakta" class="page" role="region" aria-label="Fakta">
-      <h2>Fakta Unik & Tradisi</h2>
 
-      <div class="grid-3" style="margin-top:12px">
-        <div class="card card-interactive"><h4>Julukan</h4><p class="muted">Bumi Majapahit merujuk pada kejayaan historis Kerajaan Majapahit...</p></div>
-        <div class="card card-interactive"><h4>Festival</h4><p class="muted">Jember Fashion Carnaval, Festival Reog Ponorogo, Malang Flower Carnival.</p></div>
-        <div class="card card-interactive"><h4>Upacara Adat</h4><p class="muted">Larung sesaji, sedekah laut, dan ritual panen masih dijalankan di beberapa komunitas pesisir dan agraris.</p></div>
-        <div class="card card-interactive"><h4>Hari Ulang Tahun</h4><p class="muted">12 Oktober Hari Ulang Tahun Provinsi Jawa Timur.</p></div>
-        <div class="card card-interactive"><h4>Fakta Menarik</h4><p class="muted">Gunung Semeru adalah titik tertinggi di Pulau Jawa (3.676 m).</p></div>
-        <div class="card card-interactive"><h4>Reog Ponorogo</h4><p class="muted">Seni pertunjukan ikonik dari Jawa Timur yang berasal dari Kabupaten Ponorogo...</p></div>
+    <section id="fakta" class="page" role="region" aria-label="Fakta">
+      <div class="hero-grid" style="align-items: flex-start;">
+        <div>
+          <h2>Fakta Unik & Tradisi</h2>
+          <div class="grid-3" style="margin-top:12px">
+            <div class="card card-interactive"><h4>Julukan</h4><p class="muted">Bumi Majapahit merujuk pada kejayaan historis Kerajaan Majapahit...</p></div>
+            <div class="card card-interactive"><h4>Festival</h4><p class="muted">Jember Fashion Carnaval, Festival Reog Ponorogo, Malang Flower Carnival.</p></div>
+            <div class="card card-interactive"><h4>Upacara Adat</h4><p class="muted">Larung sesaji, sedekah laut, dan ritual panen masih dijalankan di beberapa komunitas pesisir dan agraris.</p></div>
+            <div class="card card-interactive"><h4>Hari Ulang Tahun</h4><p class="muted">12 Oktober Hari Ulang Tahun Provinsi Jawa Timur.</p></div>
+            <div class="card card-interactive"><h4>Fakta Menarik</h4><p class="muted">Gunung Semeru adalah titik tertinggi di Pulau Jawa (3.676 m).</p></div>
+            <div class="card card-interactive"><h4>Reog Ponorogo</h4><p class="muted">Seni pertunjukan ikonik dari Jawa Timur yang berasal dari Kabupaten Ponorogo...</p></div>
+          </div>
+        </div>
+        <div>
+          <div style="position:relative;width:100%;max-width:360px;margin:0 auto;aspect-ratio:9/16;height:auto;overflow:hidden;border-radius:12px;background:#000;">
+            <iframe 
+              src="https://player.cloudinary.com/embed/?cloud_name=dinmn88q8&public_id=Jatim_Cd4cdac_hri1qs&profile=cld-default"
+              allow="autoplay; fullscreen; encrypted-media"
+              allowfullscreen
+              style="width:100%;height:100%;min-height:420px;border:0;display:block;background:#000;border-radius:12px;"
+              title="Video Fakta Unik Jawa Timur"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
       </div>
     </section>
 
