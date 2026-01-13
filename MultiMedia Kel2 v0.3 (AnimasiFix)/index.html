@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Explore Jawa Timur Budaya & Pariwisata</title>
+  <title>Explore Jawa Timur</title>
+  <link rel="icon" type="image/png" href="logo-explore.png" />
+  <link rel="apple-touch-icon" href="logo-explore.png" />
   <meta name="description" content="Explore Jawa Timur profil, budaya, pariwisata, geografi, dan fakta unik. Desain modern, interaktif, dan ramah pengguna." />
 
   <!-- Google Fonts -->
@@ -543,8 +545,11 @@ main{padding-top:20px}
 
           <div class="yt-small">
             <iframe 
-              src="https://www.youtube.com/embed/UOw3uN487HE"
-              allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+              src="https://www.youtube.com/embed/UOw3uN487HE?rel=0&modestbranding=1"
+              title="Video Gunung Bromo"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
             </iframe>
           </div>
         </div>
@@ -572,8 +577,11 @@ main{padding-top:20px}
 
           <div class="yt-small">
             <iframe 
-              src="https://www.youtube.com/embed/KUUZ8NoBa8k"
-              allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+              src="https://www.youtube.com/embed/KUUZ8NoBa8k?rel=0&modestbranding=1"
+              title="Video Pantai Klayar"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
             </iframe>
           </div>
         </div>
@@ -601,8 +609,11 @@ main{padding-top:20px}
 
           <div class="yt-small">
             <iframe 
-              src="https://www.youtube.com/embed/Bjvm1zlZKGM"
-              allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+              src="https://www.youtube.com/embed/Bjvm1zlZKGM?rel=0&modestbranding=1"
+              title="Video Air Terjun Tumpak Sewu"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
             </iframe>
           </div>
         </div>
@@ -630,8 +641,11 @@ main{padding-top:20px}
 
           <div class="yt-small">
             <iframe 
-              src="https://www.youtube.com/embed/HW_fzgz2BE4"
-              allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+              src="https://www.youtube.com/embed/HW_fzgz2BE4?rel=0&modestbranding=1"
+              title="Video Batu Night Spectacular"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
             </iframe>
           </div>
         </div>
@@ -799,9 +813,6 @@ main{padding-top:20px}
         setActiveNav(id);
         // scroll top instantly (faux page)
         window.scrollTo({top:0,behavior:'instant'});
-        // update title
-        const heading = target.querySelector('h1, h2, h3, h4');
-        if(heading) document.title = heading.textContent + ' Explore Jawa Timur';
         // push history
         if(push) history.pushState({page:id}, '', '#'+id);
         // trigger reveal animations immediately for this page
